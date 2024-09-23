@@ -1,0 +1,100 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"src/outfile/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 55,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 72,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 81,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"src/outfile/libswmm-output.dll.a"
+			],
+			"targetId" : "swmm-output::@81bf5789a6f4dd12ff55",
+			"targetIndex" : 2,
+			"targetIsImportLibrary" : true,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"src/outfile/libswmm-output.dll"
+			],
+			"targetId" : "swmm-output::@81bf5789a6f4dd12ff55",
+			"targetIndex" : 2,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "cmake",
+			"exportName" : "swmm-outputTargets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "swmm-output::@81bf5789a6f4dd12ff55",
+					"index" : 2
+				}
+			],
+			"paths" : 
+			[
+				"src/outfile/CMakeFiles/Export/272ceadb8458515b2ae4b5630a6029cc/swmm-output-config.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				"src/outfile/include/swmm_output.h",
+				"src/outfile/include/swmm_output_enums.h",
+				"src/outfile/include/swmm_output_export.h"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "src/outfile",
+		"source" : "src/outfile"
+	}
+}

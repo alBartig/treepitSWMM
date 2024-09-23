@@ -1,0 +1,155 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-aac68e8a1300cc47fc99.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "src/outfile",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src.outfile-Debug-a37900015735ce3826f3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/outfile",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "src/solver",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src.solver-Debug-4bb660d4f612ddef9391.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/solver",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "src/run",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src.run-Debug-a38b0fef7ef75200caaa.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/run",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "src/shared",
+					"jsonFile" : "directory-src.shared-Debug-0655539d34d0110d6e3c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/shared",
+					"targetIndexes" : 
+					[
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"name" : "swmm-solver",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 3,
+					"id" : "runswmm::@e2ee2cf14bc2b93aae8f",
+					"jsonFile" : "target-runswmm-Debug-0a68030b1f219cb1d65d.json",
+					"name" : "runswmm",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "shared_objs::@98093a27b7e7f29c85ce",
+					"jsonFile" : "target-shared_objs-Debug-36988bbbbb1de6370104.json",
+					"name" : "shared_objs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "swmm-output::@81bf5789a6f4dd12ff55",
+					"jsonFile" : "target-swmm-output-Debug-5c37e115c61d2b41dfb4.json",
+					"name" : "swmm-output",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "swmm5::@56b03cb272704949ecff",
+					"jsonFile" : "target-swmm5-Debug-983231f2318127eef2de.json",
+					"name" : "swmm5",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/albert/CLionProjects/Stormwater-Management-Model/cmake-build-debug",
+		"source" : "C:/Users/albert/CLionProjects/Stormwater-Management-Model"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 5
+	}
+}
