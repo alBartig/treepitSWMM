@@ -194,6 +194,7 @@ static double getSurfaceOverflowRate(double* surfaceDepth);
 static double getPavementPermRate(void);
 static double getSoilPercRate(double theta);
 static double getStorageExfilRate(void);
+static double getTreepitExfilRate(double storageDepth);
 static double getStorageDrainRate(double storageDepth, double soilTheta,
               double paveDepth, double surfaceDepth);
 static double getTreepitDrainRate(double storageDepth, double satDepth, double meanTheta,
@@ -1381,7 +1382,7 @@ void getTreepitFluxes(double surfaceDepth, double soilTheta, double rootedTheta,
     PavePerc = MAX(PavePerc, 0.0);
 
     //... exfiltration rate out of storage layer
-    StorageExfil = getStorageExfilRate();
+    StorageExfil = getTreepitExfilRate();
 
     //... underdrain flow rate
     SoilDrain = 0.0;
@@ -1787,39 +1788,6 @@ double getPavementPermRate()
 
 //=============================================================================
 
-double getPipeExfil(double pipeVol, double pavementDepth)
-//
-//  Purpose: computes exfiltration rate of water through a LID's distribution pipe.
-//  Input:   pipeDepth = water level inside pipe (ft)
-//  Output:  returns exfiltration rate within pavement layer (ft/s)
-//
-{
-    double waterLevel;            // water level inside dist. pipe
-    double filledArea;            // area of transect filled with water
-    double outsideLevel;          // water level outside dist. pipe
-    double delta;                 // difference in water levels
-    TXsect tempXsect;             // temporary crosssection typedef obj
-
-    tempXsect.aFull = theLidProc->distPipe.aFull;
-    tempXsect.yFull = theLidProc->distPipe.yFull;
-    tempXsect.type  = theLidProc->distPipe.type;
-
-    // filledArea = (aFull * pipeVol) / (aFull * length)
-    filledArea = pipeVol / theLidProc->distPipe.length;
-    // calculate water level in distpipe
-    waterLevel = xsect_getYofA(&tempXsect, filledArea);
-
-    // take outside water level relative to inside water level
-    outsideLevel = MAX(0, pavementDepth - theLidProc->distPipe.offset);
-    delta = MAX(waterLevel - outsideLevel, 0);
-
-    if ( delta == 0 ) return 0.0;
-
-    return theLidProc->distPipe.coeff * pow(delta, theLidProc->distPipe.expon);
-}
-
-//=============================================================================
-
 double getSoilPercRate(double theta)
 //
 //  Purpose: computes percolation rate of water through a LID's soil layer.
@@ -1864,6 +1832,37 @@ double getStorageExfilRate()
 
     //... infiltration rate = storage Ksat reduced by any clogging
     infil = theLidProc->storage.kSat * (1.0 - clogFactor);
+
+    //... limit infiltration rate by any groundwater-imposed limit
+    return MIN(infil, MaxNativeInfil);
+}
+
+//=============================================================================
+
+double getTreepitExfilRate(double storageDepth)
+//
+//  Purpose: computes exfiltration rate from storage zone into
+//           native soil beneath a LID.
+//  Input:   depth = depth of water storage zone (ft)
+//  Output:  returns infiltration rate (ft/s)
+//
+{
+    double infil = 0.0;
+    double clogFactor = 0.0;
+
+    if ( theLidProc->storage.kSat == 0.0 ) return 0.0;
+    if ( MaxNativeInfil == 0.0 ) return 0.0;
+
+    //... reduction due to clogging
+    clogFactor = theLidProc->storage.clogFactor;
+    if ( clogFactor > 0.0 )
+    {
+        clogFactor = theLidUnit->waterBalance.inflow / clogFactor;
+        clogFactor = MIN(clogFactor, 1.0);
+    }
+
+    //... infiltration rate = storage Ksat reduced by any clogging
+    infil = theLidProc->storage.kSat * (1.0 - clogFactor) * pow(storageDepth, theLidProc->storage.expon);;
 
     //... limit infiltration rate by any groundwater-imposed limit
     return MIN(infil, MaxNativeInfil);
@@ -2157,21 +2156,6 @@ double getSurfaceOverflowRate(double* surfaceDepth)
     if (  delta <= 0.0 ) return 0.0;
     *surfaceDepth = theLidProc->surface.thickness;
     return delta * theLidProc->surface.voidFrac / Tstep;
-}
-
-//=============================================================================
-
-double getPipeOverflowRate(double* distpipeVol)
-//
-//  Purpose: finds pipe overflow rate from a LID unit.
-//  Input:   distpipeVol = stored volume in distribution pipe (ft3)
-//  Output:  returns the overflow rate (ft/s)
-//
-{
-    double delta = *distpipeVol - theLidProc->distPipe.vFull;
-    if ( delta <= 0.0 ) return 0.0;
-    *distpipeVol = theLidProc->distPipe.vFull;
-    return delta / (Tstep * theLidUnit->area);
 }
 
 //=============================================================================

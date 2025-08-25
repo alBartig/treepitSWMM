@@ -825,12 +825,12 @@ int readStorageData(int j, char* toks[], int ntoks)
 //  Output:  returns error code
 //
 //  Format of data is:
-//    LID_ID STORAGE  Thickness  VoidRatio  Ksat  ClogFactor  (YES/NO) 
+//    LID_ID STORAGE  Thickness  VoidRatio  Ksat  ClogFactor  (YES/NO)  Expon
 //
 {
     int    i;
     int    covered = FALSE;
-    double x[6];
+    double x[7];
 
     //... read numerical parameters
     if ( ntoks < 6 ) return error_setInpError(ERR_ITEMS, "");
@@ -846,6 +846,15 @@ int readStorageData(int j, char* toks[], int ntoks)
         if (match(toks[6], w_YES))
             covered = TRUE;
     }
+    //... check if exponent for seepage is passed, else exponent = 0
+    if (ntoks > 7)
+    {
+        x[6] = toks[7];
+    }
+    else
+    {
+        x[6] = 0.0
+    }
 
     //... convert void ratio to void fraction
     x[1] = x[1]/(x[1] + 1.0);
@@ -854,6 +863,7 @@ int readStorageData(int j, char* toks[], int ntoks)
     LidProcs[j].storage.thickness   = x[0] / UCF(RAINDEPTH);
     LidProcs[j].storage.voidFrac    = x[1];
     LidProcs[j].storage.kSat        = x[2] / UCF(RAINFALL);
+    LidProcs[j].storage.expon       = x[6];
 
     // OWA EDIT ############################################################################
     // moved from validateLidProcs in 14d2e62e9a6baad89f6cd2dc0c55907e1d2289b2

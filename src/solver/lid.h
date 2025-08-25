@@ -110,6 +110,7 @@ typedef struct
     double    kSat;               // saturated hydraulic conductivity (ft/sec)
     double    clogFactor;         // clogging factor
     int       covered;            // TRUE if rain barrel is covered
+    double    expon;              // default 0, for depth variable seepage
 }  TStorageLayer;
 
 // Underdrain System (part of Storage Layer)
